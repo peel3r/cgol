@@ -1,14 +1,14 @@
-/**
- * Created by peeler on 05/05/15.
- */
+function $(selector, container) {
+    return (container || document).querySelector(selector);
+}
 
+(function() {
 
-(function () {
-
-    var _ = self.Life = function(seed){
+    var _ = self.Life = function(seed) {
         this.seed = seed;
         this.height = seed.length;
         this.width = seed[0].length;
+
         this.prevBoard = [];
         this.board = cloneArray(seed);
     };
@@ -36,61 +36,42 @@
             }
         },
 
-        aliveNeighbors: function(array,x,y) {
+        aliveNeighbors: function (array, x, y) {
             var prevRow = array[y-1] || [];
             var nextRow = array[y+1] || [];
-            var sum = 0;
 
-            return  [
-                prevRow[x-1],prevRow[x],prevRow[x+1],
-                array[y][x-1],array[y][x+1],
-                nextRow[x-1],nextRow[x],nextRow[x+1]
-            ].reduce(function(prev, cur){
-                    return prev += +!!cur;
-                },0);
-
+            return [
+                prevRow[x-1], prevRow[x], prevRow[x+1],
+                array[y][x-1], array[y][x+1],
+                nextRow[x-1], nextRow[x], nextRow[x+1]
+            ].reduce(function (prev, cur) {
+                    return prev + +!!cur;
+                }, 0);
         },
-        toString: function () {
-            return this.board.map(function(row) {return row.join(' ');}).join('\n');
 
+        toString: function () {
+            return this.board.map(function (row) { return row.join(' '); }).join('\n');
         }
     };
-    //helpers
-    //clone 2D array
+
+// Helpers
+// Warning: Only clones 2D arrays
     function cloneArray(array) {
-        return array.slice().map(function(row){return row.slice(); });
+        return array.slice().map(function (row) { return row.slice(); });
     }
 
 })();
 
+(function(){
 
-/* initial debugging helper
-var game = new Life([
-    [0,0,0,0,0],
-    [0,0,1,0,0],
-    [0,0,1,0,0],
-    [0,0,1,0,0],
-    [0,0,0,0,0]
-]);
+    var _ = self.LifeView = function (table, size) {
+        this.grid = table;
+        this.size = size;
+        this.started = false;
+        this.autoplay = false;
 
-console.log(game  + ' ');
-game.next();
-console.log(game  + ' ');
-game.next();
-console.log(game  + ' ');
-*/
-
-(function() {
-
-    var _ = self.Life = function(seed) {
-        this.seed = seed;
-        this.height = seed.length;
-        this.width = seed[0].length;
-
-        this.prevBoard = [];
-        this.board = cloneArray(seed);
+        this.createGrid();
     };
-
 
     _.prototype = {
         createGrid: function () {
@@ -198,7 +179,7 @@ console.log(game  + ' ');
         }
     };
 
-    })();
+})();
 
 var lifeView = new LifeView(document.getElementById('grid'), 12);
 
