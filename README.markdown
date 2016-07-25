@@ -1,5 +1,5 @@
 #Conwey's Game of Life using HTML, CSS and JavaScript
- ##Clasic problem from the 70's implemented in the browser using
+ ##Clasic problem from the 70's implemented in the browser
 
  ###Rules
 
